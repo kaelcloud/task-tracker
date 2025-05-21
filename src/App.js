@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState("");
+
+  const addTask = () => {
+    if (input.trim()) {
+      setTasks([...tasks, { text: input, done: false }]);
+      setInput("");
+    }
+  };
+
+  const toggleTask = (index) => {
+    const updated = [...tasks];
+    updated[index].done = !updated[index].done;
+    setTasks(updated);
+  };
+
+  const deleteTask = (index) => {
+    const updated = [...tasks];
+    updated.splice(index, 1);
+    setTasks(updated);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: 20 }}>
+      <h1>Task Tracker</h1>
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Enter task"
+      />
+      <button onClick={addTask}>Add</button>
+      <ul>
+        {tasks.map((task, idx) => (
+          <li key={idx}>
+            <span
+              onClick={() => toggleTask(idx)}
+              style={{ textDecoration: task.done ? "line-through" : "none" }}
+            >
+              {task.text}
+            </span>
+            <button onClick={() => deleteTask(idx)}>❌</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
