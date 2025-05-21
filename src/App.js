@@ -25,7 +25,7 @@ function App() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Task Tracker</h1>
+      <h1>MyAwesomeTask</h1>
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
